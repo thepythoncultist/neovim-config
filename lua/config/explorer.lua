@@ -17,7 +17,8 @@ local function on_attach_binds(bufnr)
   vim.keymap.set('n', 'd', api.fs.remove, opts('Remove'))
   vim.keymap.set('n', 'n', api.fs.create, opts('Create new file/directory'))
   vim.keymap.set('n', 'r', api.tree.change_root_to_node, opts('Change root to selection'))
-
+  vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open in a vertical split'))
+  vim.keymap.set('n', 'x', api.node.open.horizontal, opts('Open in a horizontal split'))
 end
 
 require("nvim-tree").setup{
