@@ -3,8 +3,8 @@ return {
     'mfussenegger/nvim-dap',
     dependencies = {
       'rcarriga/nvim-dap-ui',
-      'nvim-neotest/nvim-nio',
       'theHamsta/nvim-dap-virtual-text',
+      'nvim-neotest/nvim-nio',
 
       'mfussenegger/nvim-dap-python',
       'jbyuki/one-small-step-for-vimkind',
@@ -13,15 +13,11 @@ return {
       local dap = require('dap')
       local dapui = require('dapui')
 
-      require('dapui').setup()
-      require('nvim-dap-virtual-text').setup({
-        enabled = true,
-        virtual_text = true,
-        commented = true,
-        transparent = true,
-        display_variables = true,
-      })
+      require('nvim-dap-virtual-text').setup{
+        virt_text_pos = vim.fn.has 'nvim-0.10' == 1 and 'eol',
+      }
 
+      require('dapui').setup()
       -- Set up dapui auto loading
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
