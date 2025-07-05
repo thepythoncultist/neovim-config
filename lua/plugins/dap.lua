@@ -32,6 +32,38 @@ return {
         --dapui.close()
       --end
 
+      -- Set up C++ support
+      dap.adapters.cppdbg = {
+        id = 'cppdbg',
+        type = 'executable',
+        command = '/usr/local/bin/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+      } 
+
+      dap.configurations.cpp = {
+        {
+          name = "Launch file",
+          type = "cppdbg",
+          request = "launch",
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+          cwd = '${workspaceFolder}',
+          stopOnEntry = false,
+          console = 'integratedTerminal',
+        },
+        {
+          name = 'Attach to gdbserver :1234',
+          type = 'cppdbg',
+          request = 'launch',
+          MIMode = 'gdb',
+          miDebuggerServerAddress = 'localhost:1234',
+          miDebuggerPath = '/usr/bin/gdb',
+          cwd = '${workspaceFolder}',
+          program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          end,
+        },
+      }
       -- Set up python support
       dap.adapters.python = {
         type = 'executable',
@@ -50,6 +82,11 @@ return {
           console = 'integratedTerminal',
         },
       }
+
+      -- Set up c and rust support
+
+      dap.configurations.c = dap.configurations.cpp
+      dap.configurations.rust = dap.configurations.cpp
 
 
       -- Set up lua support
